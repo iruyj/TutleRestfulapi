@@ -6,5 +6,7 @@ app_name = "cures"
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path('cures/',views.cures_list),
+    path('cures/user/',views.CureSelect.as_view(),name='cures_user'),
+    path('cures/today/',views.TodaySelect.as_view(),name='cures_today'),
+    path('new/',views.CureCreate.as_view(),name='new'),
 ]

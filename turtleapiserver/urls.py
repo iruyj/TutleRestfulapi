@@ -8,5 +8,6 @@ from cure import views
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     url(r'^cure/', include('cure.urls'),name='cure'),
+    url(r'^turtle/', include('turtles.urls'),name='turtle'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
