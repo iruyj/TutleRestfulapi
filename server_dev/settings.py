@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'turtleapiserver.urls'
+ROOT_URLCONF = 'server_dev.urls'
 
 TEMPLATES = [
     {
