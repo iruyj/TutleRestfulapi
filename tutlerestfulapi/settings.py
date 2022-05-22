@@ -76,13 +76,24 @@ WSGI_APPLICATION = 'tutlerestfulapi'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+import pymysql
+pymysql.install_as_MySQLdb()
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql', # engine: mysql
+        'NAME' : 'tutle', # DB Name
+        'USER' : 'admin', # DB User
+        'PASSWORD' : 'admintutle1922', # Password
+        'HOST': 'tutle.canuap4de66a.us-east-1.rds.amazonaws.com', # 생성한 데이터베이스 엔드포인트
+        'PORT': '3306', # 데이터베이스 포트
+        'OPTIONS':{
+            'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
     }
 }
+
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES':[
