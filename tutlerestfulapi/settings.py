@@ -97,7 +97,7 @@ DATABASES = {
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES':[
-        'rest_framework.renders.DjangoModelPermissions'
+        # 'rest_framework.renders.DjangoModelPermissions'
     ]
 }
 
