@@ -7,5 +7,5 @@ from turtles.views import tutleList
 
 urlpatterns = [
     # path('connect/',views.TurtleLogin.as_view(),name='connect'),
-    path('tutle/', tutleList ,name='new')
+    path('', tutleList ,name='new')
 ]
