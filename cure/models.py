@@ -3,9 +3,12 @@ import datetime
 from django.db import models
 
 # Create your models here.
+from rest_framework.settings import api_settings
+
+
 class Cure(models.Model):
     created = models.DateField(verbose_name='해당날짜',auto_now_add=True)
-    start = models.TimeField(verbose_name='시작시간',default=datetime.time)   # 처음 생성시간
+    start = models.TimeField(verbose_name='시작시간',auto_now_add=True)   # 처음 생성시간
     end = models.TimeField(verbose_name='완료시간',null=True)
     stretch = models.IntegerField(verbose_name='해당스트레칭번호')     # 몇번째 스트레칭인지
     status = models.IntegerField(verbose_name='현재상태')      # 완료인지 현재 개수
