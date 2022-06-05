@@ -3,7 +3,6 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status, generics, mixins
 from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 
@@ -15,8 +14,8 @@ from .serializers import CureSerializer
 class Cures(APIView):
     def post(self,request):
         user_email = request.data.get('user_email','')
-        end_time = request.data.get('end_time',None)
-        stretch_num = request.data.get('stnum',0)
+        end_time = request.data.get('end',None)
+        stretch_num = request.data.get('stretch',0)
         status = request.data.get('status',0)
 
         cure = Cure.objects.create(user_email=user_email, end=end_time, stretch=stretch_num, status=status )
