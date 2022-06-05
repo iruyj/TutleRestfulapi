@@ -8,6 +8,6 @@ from turtles.views import tutleList
 urlpatterns = [
     # path('connect/',views.TurtleLogin.as_view(),name='connect'),
     path('', tutleList ,name='list'),
-    path('login', views.turtles ,name='login'),
+    path('user', views.turtles ,name='login'),
     path('new', views.CreateTurtle.as_view() ,name='new')
 ]
