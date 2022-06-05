@@ -53,6 +53,7 @@ class TodaySelect(APIView):
 
 
 @csrf_exempt
+@api_view(['GET','PUT','DELETE'])
 def cure_select(request,id):
     cure = Cure.objects.filter(id=id)
     if request.method == 'GET':

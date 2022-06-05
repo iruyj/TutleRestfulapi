@@ -14,6 +14,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from .serializers import TurtleSerializer
 
 # 거북이 가져오기
+@api_view(['GET','PUT'])
 def turtles(request):
     user_email = request.query_params.get('user_email',"")
     user = Turtle.objects.filter(email=user_email).first()
