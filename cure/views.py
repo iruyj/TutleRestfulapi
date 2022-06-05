@@ -1,5 +1,6 @@
 import datetime
 from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status, generics, mixins
@@ -34,11 +35,8 @@ class CureUser(APIView):
             user_email = request.query_params.get('user_email', "")
 
         cures = Cure.objects.filter(user_email=user_email)
-        cure_list = []
-        for cure in cures:
-            cure_list.append(dict(user_email=cure.email, start_time=cure.start, end_time=cure.end, state=cure.state,stretch=cure.stretch, created=cure.created))
-
-        return Response(dict(cures=cure_list))
+        serializers = CureSerializer(cures, many=True)
+        return Response(serializers.data)
 
 
 # Select today's stretchLogs
@@ -50,21 +48,16 @@ class TodaySelect(APIView):
             user_email = request.query_params.get('user_email', "")
 
         cures = Cure.objects.filter(created=today,user_email=user_email)
-        cure_list = []
-        for cure in cures:
-            cure_list.append(dict(user_email=cure.email, start_time=cure.start, end_time=cure.end, state=cure.state,stretch=cure.stretch, created=cure.created))
-
-        serializers = CureSerializer(cure_list, many=True)
+        serializers = CureSerializer(cures, many=True)
         return Response(serializers.data)
 
 
+@csrf_exempt
 def cure_select(request,id):
     cure = Cure.objects.filter(id=id)
     if request.method == 'GET':
-        data = (dict(user_email=cure.email, start_time=cure.start, end_time=cure.end, state=cure.state,
-                                  stretch=cure.stretch, created=cure.created))
-
-        return Response(dict(cures=data))
+        serializers = CureSerializer(cure, many=True)
+        return Response(serializers.data)
 
     if request.method == 'PUT':
         data = JSONParser().parse(request)
