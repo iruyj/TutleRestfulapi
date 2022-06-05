@@ -30,9 +30,7 @@ class Cures(APIView):
 
 class CureUser(APIView):
     def get(self, request):
-        user_email = ''
-        if request.query_params:
-            user_email = request.query_params.get('user_email', "")
+        user_email = request.query_params.get('user_email', "")
 
         cures = Cure.objects.filter(user_email=user_email)
         serializers = CureSerializer(cures, many=True)
@@ -42,20 +40,18 @@ class CureUser(APIView):
 # Select today's stretchLogs
 class TodaySelect(APIView):
     def get(self, request):
-        today = datetime.date
-        user_email = ''
-        if request.query_params:
-            user_email = request.query_params.get('user_email', "")
+        day = request.query_params.get('date',datetime.date)
+        user_email = request.query_params.get('user_email', "")
 
-        cures = Cure.objects.filter(created=today,user_email=user_email)
+        cures = Cure.objects.filter(created=day,user_email=user_email)
         serializers = CureSerializer(cures, many=True)
         return Response(serializers.data)
 
 
 @csrf_exempt
 @api_view(['GET','PUT','DELETE'])
-def cure_select(request,id):
-    cure = Cure.objects.filter(id=id)
+def cure_select(request,id,queryset=None):
+    cure = Cure.objects.filter(id=id).first()
     if request.method == 'GET':
         serializers = CureSerializer(cure, many=True)
         return Response(serializers.data)

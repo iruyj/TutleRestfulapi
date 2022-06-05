@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -14,7 +14,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from .serializers import TurtleSerializer
 
 # 거북이 가져오기
-@api_view(['GET','PUT'])
+@api_view(['GET','PUT','DELETE'])
 def turtles(request):
     user_email = request.query_params.get('user_email',"")
     user = Turtle.objects.filter(email=user_email).first()
@@ -30,6 +30,10 @@ def turtles(request):
             serial.save()
             return JsonResponse(serial.data, status=201)
         return JsonResponse(serial.errors, status=400)
+
+    if request.method == 'DELETE':
+        user.delete()
+        return HttpResponse(status=204)
 
 # 사용자 거북이 생성
 class CreateTurtle(APIView):
@@ -49,7 +53,6 @@ class CreateTurtle(APIView):
         turtle = serializer.create(request.data)
 
         return Response(data=TurtleSerializer(turtle).data)
-
 
 @api_view(['GET'])
 def tutleList(request):
