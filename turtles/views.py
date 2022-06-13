@@ -52,7 +52,7 @@ class CreateTurtle(APIView):
             return Response(data)
         turtle = serializer.create(request.data)
 
-        return Response(data=TurtleSerializer(turtle).data)
+        return Response(data=TurtleSerializer(turtle, many=True).data)
 
 @api_view(['GET'])
 def tutleList(request):
