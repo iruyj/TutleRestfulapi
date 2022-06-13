@@ -38,11 +38,11 @@ def turtles(request):
 # 사용자 거북이 생성
 class CreateTurtle(APIView):
     def post(self, request):
-        serializer = TurtleSerializer(request.data)
+        serializer = TurtleSerializer()
 
-        if Turtle.objects.filter(email=serializer.data['email']).exists():
+        if Turtle.objects.filter(email=request.POST.get('email','')).exists():
             # DB에 있는 값 출력할 때 어떻게 나오는지 보려고 user 객체에 담음
-            user = Turtle.objects.filter(email=serializer.data['email']).first()
+            user = Turtle.objects.get(email=request.POST.get('email'))
             data = dict(
                 msg="이미 존재하는 이메일입니다.",
                 user_email=user.email,
