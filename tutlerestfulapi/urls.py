@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^cure/', include('cure.urls'),name='cure'),
-    url(r'^turtle/', include('turtles.urls'),name='turtle'),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url('cure/', include('cure.urls'),name='cure'),
+    url('turtle/', include('turtles.urls'),name='turtle'),
+    url('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
