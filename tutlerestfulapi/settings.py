@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'turtles',
+    'corsheaders',
     'cure',
 ]
 
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'tutlerestfulapi.urls'
@@ -93,6 +95,8 @@ DATABASES = {
     }
 }
 
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CRDENTIALS = True
 
 
 REST_FRAMEWORK = {
