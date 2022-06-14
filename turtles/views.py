@@ -3,6 +3,7 @@ from django.shortcuts import render
 
 # Create your views here.
 # login/views.py
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 
@@ -14,6 +15,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from .serializers import TurtleSerializer
 
 # 거북이 가져오기
+@csrf_exempt
 @api_view(['GET','PUT','DELETE'])
 def turtles(request):
     user_email = request.query_params.get('user_email',"")
@@ -23,10 +25,14 @@ def turtles(request):
         return Response(selrialize.data)
 
     if request.method == 'PUT':
-        serial = TurtleSerializer(user, data=request.data)
+        data = JSONParser().parse(request)
+        serial = TurtleSerializer(user, data=data)
 
-        serial.save()
-        return Response(TurtleSerializer(user).data)
+        if serial.is_valid():
+            serial.save()
+            return JsonResponse(serial.data, status=201)
+        return JsonResponse(serial.errors, status=400)
+
 
     if request.method == 'DELETE':
         user.delete()
