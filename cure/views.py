@@ -47,13 +47,12 @@ class TodaySelect(APIView):
         return Response(serializers.data)
 
 
-@csrf_exempt
+
 @api_view(['GET','PUT','DELETE'])
 def cure_select(request,id):
-    cure = Cure.objects.filter(id=id).values()
+    cure = Cure.objects.filter(id=id).first()
     if request.method == 'GET':
-        serializers = CureSerializer(cure,many=True)
-        return Response(serializers.data)
+        return Response(CureSerializer(cure).data)
 
     if request.method == 'PUT':
         data = JSONParser().parse(request)
