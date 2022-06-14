@@ -38,8 +38,13 @@ def turtles(request):
 # 사용자 거북이 생성
 class CreateTurtle(APIView):
     def post(self, request):
-        serializer = TurtleSerializer(request.POST)
-
+        post_data = {
+            "email": request.POST.get("email"),
+            "name": request.POST.get("name"),
+            "num": request.POST.get("num"),
+        }
+        serializer = TurtleSerializer(post_data)
+        print(request.POST)
         if Turtle.objects.filter(email=request.POST.get('email','')).exists():
             # DB에 있는 값 출력할 때 어떻게 나오는지 보려고 user 객체에 담음
             user = Turtle.objects.get(email=request.POST.get('email',''))
@@ -50,7 +55,7 @@ class CreateTurtle(APIView):
                 num=user.num
             )
             return Response(data)
-        turtle = serializer.create(request.POST)
+        turtle = serializer.create(post_data)
 
         return Response(data=TurtleSerializer(turtle).data)
 
