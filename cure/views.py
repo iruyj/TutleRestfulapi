@@ -49,10 +49,10 @@ class TodaySelect(APIView):
 
 @csrf_exempt
 @api_view(['GET','PUT','DELETE'])
-def cure_select(request,id,queryset=None):
-    cure = Cure.objects.filter(id=id).first()
+def cure_select(request,id):
+    cure = Cure.objects.filter(id=id).values()
     if request.method == 'GET':
-        serializers = CureSerializer(cure, many=True)
+        serializers = CureSerializer(cure,many=True)
         return Response(serializers.data)
 
     if request.method == 'PUT':
@@ -60,7 +60,7 @@ def cure_select(request,id,queryset=None):
         serial = CureSerializer(cure, data=data)
 
         if serial.is_valid():
-            serial.update()
+            serial.save()
             return JsonResponse(serial.data,status=201)
         return JsonResponse(serial.errors, status=400)
 
