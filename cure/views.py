@@ -60,7 +60,7 @@ def cure_select(request,id,queryset=None):
         serial = CureSerializer(cure, data=data)
 
         if serial.is_valid():
-            serial.save()
+            serial.update()
             return JsonResponse(serial.data,status=201)
         return JsonResponse(serial.errors, status=400)
 

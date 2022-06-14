@@ -27,12 +27,8 @@ def turtles(request):
     if request.method == 'PUT':
         data = JSONParser().parse(request)
         serial = TurtleSerializer(user, data=data)
-
-        if serial.is_valid():
-            serial.save()
-            return JsonResponse(serial.data, status=201)
-        return JsonResponse(serial.errors, status=400)
-
+        serial.update(user,request.data)
+        return Response(TurtleSerializer(serial.data).data)
 
     if request.method == 'DELETE':
         user.delete()
