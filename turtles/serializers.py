@@ -12,6 +12,12 @@ class TurtleSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         return attrs
 
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name',instance.name)
+        instance.num = validated_data.get('num',instance.num)
+        instance.save()
+        return instance
+
     class Meta:
         model = Turtle
         fields = ['email','name','num']
