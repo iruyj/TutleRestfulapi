@@ -39,22 +39,21 @@ def turtles(request):
 class CreateTurtle(APIView):
     def post(self, request):
         post_data = {
-            "email": request.POST.get("email"),
-            "name": request.POST.get("name"),
-            "num": request.POST.get("num"),
+            "email": request.data.get('email'),
+            "name": request.data.get('name',"거북이"),
+            "num": request.data.get('num',1),
         }
         serializer = TurtleSerializer(post_data)
-        print(request.POST)
-        if Turtle.objects.filter(email=request.POST.get('email','')).exists():
+        # return Response(request.data)
+        if Turtle.objects.filter(email=request.data.get('email','')).exists():
             # DB에 있는 값 출력할 때 어떻게 나오는지 보려고 user 객체에 담음
-            user = Turtle.objects.get(email=request.POST.get('email',''))
-            data = dict(
-                msg="이미 존재하는 이메일입니다.",
-                user_email=user.email,
-                user_name=user.name,
-                num=user.num
-            )
-            return Response(data)
+            user = Turtle.objects.get(email=request.data.get('email',''))
+            data = {
+                "email": user.email,
+                "name": user.name,
+                "num": user.num
+            }
+            return Response(data=TurtleSerializer(data).data)
         turtle = serializer.create(post_data)
 
         return Response(data=TurtleSerializer(turtle).data)
