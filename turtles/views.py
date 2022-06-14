@@ -18,7 +18,7 @@ from .serializers import TurtleSerializer
 @csrf_exempt
 @api_view(['GET','PUT','DELETE'])
 def turtles(request):
-    user_email = request.query_params.get('user_email',"")
+    user_email = request.query_params.get('user_email', "")
     user = Turtle.objects.filter(email=user_email).first()
     if request.method == 'GET':
         selrialize = TurtleSerializer(user)
@@ -27,12 +27,16 @@ def turtles(request):
     if request.method == 'PUT':
         data = JSONParser().parse(request)
         serial = TurtleSerializer(user, data=data)
-        serial.update(user,request.data)
-        return Response(TurtleSerializer(serial.data).data)
+
+        if serial.is_valid(raise_exception=True):
+            serial.save()
+            return JsonResponse(serial.data, status=201)
+        return JsonResponse(serial.errors, status=400)
 
     if request.method == 'DELETE':
         user.delete()
         return HttpResponse(status=204)
+
 
 # 사용자 거북이 생성
 class CreateTurtle(APIView):
