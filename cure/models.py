@@ -14,6 +14,6 @@ class Cure(models.Model):
 
     class Meta:
         db_table = 'cure'
-        ordering = ['created','start']
+        ordering = ['created']
         verbose_name = '스트레칭 테이블'
 

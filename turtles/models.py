@@ -15,4 +15,5 @@ class Turtle(models.Model):
 
     class Meta:
         db_table = 'turtle'
+        ordering = ['created']
         verbose_name = '유저 거북이 테이블'

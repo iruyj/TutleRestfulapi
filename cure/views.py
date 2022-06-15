@@ -52,8 +52,6 @@ class DaysSelect(APIView):
         days = cures.value_list('created',flat=True).distinct().order_by('created')
         return JsonResponse(days, status=200)
 
-
-
 @api_view(['GET','PUT','DELETE'])
 def cure_select(request,id):
     cure = Cure.objects.filter(id=id).first()
