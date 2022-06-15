@@ -14,14 +14,12 @@ from .serializers import CureSerializer
 class Cures(APIView):
     def post(self,request):
         user_email = request.data.get('user_email','')
-        end_time = request.data.get('end',None)
         stretch_num = request.data.get('stretch',0)
         status = request.data.get('status',0)
 
-        cure = Cure.objects.create(user_email=user_email, end=end_time, stretch=stretch_num, status=status )
+        cure = Cure.objects.create(user_email=user_email, stretch=stretch_num, status=status )
         
-        return Response(dict(msg="cure 생성 완료",end_time=cure.end, start_time=cure.start,
-                             date=cure.created, status= cure.status, stretch_num= cure.stretch))
+        return Response(dict(msg="cure 생성 완료",date=cure.created, status= cure.status, stretch_num= cure.stretch))
     def get(self, request):
         all = Cure.objects.all()
         serializers = CureSerializer(all, many=True)
@@ -45,6 +43,14 @@ class TodaySelect(APIView):
         cures = Cure.objects.filter(created=day,user_email=user_email)
         serializers = CureSerializer(cures, many=True)
         return Response(serializers.data)
+
+class DaysSelect(APIView):
+    def get(self, request):
+        user_email = request.query_params.get('user_email', "")
+
+        cures = Cure.objects.filter(user_email=user_email)
+        days = cures.value_list('created',flat=True).distinct().order_by('created')
+        return JsonResponse(days, status=200)
 
 
 

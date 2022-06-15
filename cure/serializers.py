@@ -6,4 +6,4 @@ class CureSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cure
-        fields = ['id','created','start','end','stretch','status','user_email']
+        fields = ['id','created','stretch','status','user_email']

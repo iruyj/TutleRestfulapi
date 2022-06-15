@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 
@@ -37,7 +39,6 @@ def turtles(request):
         user.delete()
         return HttpResponse(status=204)
 
-
 # 사용자 거북이 생성
 class CreateTurtle(APIView):
     def post(self, request):
@@ -45,6 +46,8 @@ class CreateTurtle(APIView):
             "email": request.data.get("email"),
             "name": request.data.get("name"),
             "num": request.data.get("num"),
+            "ease": request.data.get("ease"),
+            "best": request.data.get("best"),
         }
         serializer = TurtleSerializer(post_data)
         print(request.data)
@@ -54,12 +57,25 @@ class CreateTurtle(APIView):
             data = {
                 "email": user.email,
                 "name": user.name,
-                "num": user.num
+                "num": user.num,
+                "ease": user.ease,
+                "best": user.best,
+                "created": user.created,
             }
             return Response(data=TurtleSerializer(data).data)
         turtle = serializer.create(post_data)
 
         return Response(data=TurtleSerializer(turtle).data)
+
+# 해당 유저와 시작일이 똑같은 유저들 반환
+class StartDayTurtles(APIView):
+    def get(self, request):
+        user_email = request.query_params.get('user_email', "")
+        user = Turtle.objects.get(email=user_email)
+
+        turtle = Turtle.objects.filter(created=user.created)
+        serializers = TurtleSerializer(turtle, many=True)
+        return Response(serializers.data)
 
 @api_view(['GET'])
 def tutleList(request):
