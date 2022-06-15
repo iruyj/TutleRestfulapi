@@ -9,5 +9,6 @@ urlpatterns = [
     # path('connect/',views.TurtleLogin.as_view(),name='connect'),
     path('', tutleList ,name='list'),
     path('user', views.turtles ,name='login'),
-    path('new', views.CreateTurtle.as_view() ,name='new')
+    path('new', views.CreateTurtle.as_view() ,name='new'),
+    path('date', views.StartDayTurtles.as_view() ,name='date')
 ]

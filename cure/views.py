@@ -35,7 +35,7 @@ class CureUser(APIView):
 
 
 # Select today's stretchLogs
-class TodaySelect(APIView):
+class DaysSelect(APIView):
     def get(self, request):
         day = request.query_params.get('date',datetime.date)
         user_email = request.query_params.get('user_email', "")
@@ -44,7 +44,7 @@ class TodaySelect(APIView):
         serializers = CureSerializer(cures, many=True)
         return Response(serializers.data)
 
-class DaysSelect(APIView):
+class DaysDistinct(APIView):
     def get(self, request):
         user_email = request.query_params.get('user_email', "")
 

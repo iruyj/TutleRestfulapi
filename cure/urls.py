@@ -8,9 +8,10 @@ app_name = "cures"
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('user',views.CureUser.as_view(),name='cures_user'),
-    path('today',views.TodaySelect.as_view(),name='cures_today'),
+    path('date',views.DaysSelect.as_view(),name='cures_day'),
     path('',views.Cures.as_view(),name='cures'),
     path('<int:id>',views.cure_select,name='select'),
+    path('distinct',views.DaysDistinct.as_view(),name='cures_distinct_day'),
     # path('list/',views.CureAll.as_view(),name='list'),
     # path('log/',all_log ,name='all'),
     # path
