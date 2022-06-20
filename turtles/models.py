@@ -9,7 +9,7 @@ class Turtle(models.Model):
     name = models.CharField(max_length=20)
     created = models.DateField(verbose_name='해당날짜',auto_now_add=True)
     ease = models.IntegerField(verbose_name='거북목 완화도', default=0)
-    best = models.DateField(verbose_name='완주날짜',null=True)
+    best = models.CharField(verbose_name='완주날짜',null=True, default="0000-00-00")
     num = models.IntegerField(verbose_name='거북이 캐릭터 번호')
     email = models.EmailField(verbose_name='사용자 식별 이메일',primary_key=True)
 
