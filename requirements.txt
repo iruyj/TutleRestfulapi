@@ -1,13 +1,11 @@
 Django==3.2.12
 django-filter==21.1
-django-uwsgi==0.2.2
 djangorestframework==3.13.1
-future==0.18.2
-generics==3.4.0
 Markdown==3.3.7
 mixins==0.1.4
-mysqlclient==2.1.0
 PyMySQL==1.0.2
 pytz==2022.1
 serializers==0.2.4
 sqlparse==0.4.2
+uwsgi
+django-cors-headers
