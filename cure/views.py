@@ -44,14 +44,6 @@ class DaysSelect(APIView):
         serializers = CureSerializer(cures, many=True)
         return Response(serializers.data)
 
-class DaysDistinct(APIView):
-    def get(self, request):
-        user_email = request.query_params.get('user_email', "")
-
-        cures = Cure.objects.filter(user_email=user_email)
-        days = cures.value_list('created',flat=True).distinct().order_by('created')
-        return JsonResponse(days, status=200)
-
 @api_view(['GET','PUT','DELETE'])
 def cure_select(request,id):
     cure = Cure.objects.filter(id=id).first()

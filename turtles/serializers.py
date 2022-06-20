@@ -12,8 +12,8 @@ class TurtleSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name',instance.name)
         instance.num = validated_data.get('num',instance.num)
-        instance.best = validated_data.get('best',instance.num)
-        instance.ease = validated_data.get('ease',instance.num)
+        instance.best = validated_data.get('best',instance.best)
+        instance.ease = validated_data.get('ease',instance.ease)
         instance.save()
         return instance
 
